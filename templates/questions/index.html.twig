@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'questions/_form.html.twig' with {questionsForm} only %}
+    <div class="flex-col">
+        {{ results }} questions
+        {% for question in questions %}
+            {{ question.title }}
+        {% endfor %}
+    </div>
+{% endblock %}

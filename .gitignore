@@ -32,3 +32,4 @@ yarn-error.log
 ###< symfony/phpunit-bridge ###
 
 .idea/
+.env/

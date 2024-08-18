@@ -1,0 +1,18 @@
+<a href="#" class="flex-col w-1/4 h-3/4 p-2 rounded-3xl hover:bg-gray-100">
+    <div class="relative w-full">
+        <img src="{{ asset('images/valorant.jpg') }}" alt="card_image" class="w-full h-52 object-cover object-center rounded-3xl">
+        <div class="absolute top-2 right-2 w-auto px-5 rounded-full bg-[#AD0569]">
+            <p class="text-white text-sm text-semibold">{{ category }}</p>
+        </div>
+    </div>
+    <div class="p-1">
+        <p class="text-lg">{{ title }}</p>
+    </div>
+    <div class="flex justify-between text-sm p-2 text-[#AD0569]">
+        <p>{{ responses }} réponses</p>
+        <span>•</span>
+        <p>Par {{ author.firstname }} {{ author.lastname }}</p>
+        <span>•</span>
+        <p>Il y a {{ createdAt }}</p>
+    </div>
+</a>

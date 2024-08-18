@@ -1,0 +1,15 @@
+{{ form_start(questionsForm) }}
+<div class="keywords flex flex-col ">
+    {{ form_label(questionsForm.title) }}
+    {{ form_widget(questionsForm.title) }}
+</div>
+<div class="levels flex flex-col ">
+    {{ form_label(questionsForm.author) }}
+    {{ form_widget(questionsForm.author) }}
+</div>
+<div class="thematics flex flex-col ">
+    {{ form_label(questionsForm.category) }}
+    {{ form_widget(questionsForm.category) }}
+</div>
+<button type="submit">Envoyer</button>
+{{ form_end(questionsForm) }}
