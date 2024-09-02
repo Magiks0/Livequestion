@@ -11,26 +11,28 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class QuestionsType extends AbstractType
+class ResearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('title',TextType::class,[
-                'label' => 'Titre',
+                'label' => 'Titre de la question',
                 'required' => false,
             ])
             ->add('author', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => function (User $user) {
-                    return $user->getFirstname() . ' ' . $user->getLastname();
+                    return $user->getUsername();
                 },
                 'required' => false,
+                'placeholder' => "---"
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'required' => false,
+                'placeholder' => "---"
             ])
         ;
     }

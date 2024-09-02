@@ -22,7 +22,10 @@ class Response
 
     #[ORM\ManyToOne(inversedBy: 'responses')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?question $question = null;
+    private ?Question $question = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
     {
@@ -61,6 +64,18 @@ class Response
     public function setQuestion(?question $question): static
     {
         $this->question = $question;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

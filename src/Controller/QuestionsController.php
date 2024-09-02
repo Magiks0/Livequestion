@@ -2,31 +2,37 @@
 
 namespace App\Controller;
 
-use App\Form\QuestionsType;
+use App\Entity\File;
+use App\Entity\Question;
+use App\Form\QuestionType;
+use App\Form\ResearchType;
+use App\Repository\CategoryRepository;
 use App\Repository\QuestionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\UserRepository;
-use App\Repository\CategoryRepository;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\UX\Turbo\TurboBundle;
 
+#[isGranted("ROLE_AUTHOR")]
 class QuestionsController extends AbstractController
 {
-    #[Route('/questions', name: 'app_questions')]
-    public function index(
-        Request $request,
-        QuestionRepository $questionRepository,
-        UserRepository $userRepository,
-        CategoryRepository $categoryRepository,
-        PaginatorInterface $paginator
-    ): Response {
-        // Créez le formulaire et gérez la requête
-        $form = $this->createForm(QuestionsType::class);
-        $form->handleRequest($request);
+    public function __construct(EntityManagerInterface $manager)
+    {
+    }
 
-        // Si le formulaire est soumis et valide
+    #[Route('/question', name: 'app_question')]
+    public function index(Request $request, QuestionRepository $questionRepository,CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
+    {
+        $form = $this->createForm(ResearchType::class)->handleRequest($request);
+        $newForm = clone $form;
+        $questions = $questionRepository->findAll();
+        $categories = $categoryRepository->findAll();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
@@ -34,44 +40,74 @@ class QuestionsController extends AbstractController
             $author = $formData->getAuthor();
             $category = $formData->getCategory();
 
-            // Redirigez vers la même route avec les filtres comme paramètres de l'URL
-            return $this->redirectToRoute('app_questions', [
-                'title' => $title,
-                'author' => $author ? $author->getId() : null,
-                'category' => $category ? $category->getId() : null,
-            ]);
+            if(is_null($title) && is_null($author) && is_null($category)){
+                $questions = $questionRepository->findAll();
+            }else{
+                $questions = $questionRepository->findQuestionsByFilters($title, $author, $category);
+            }
+
+            $pagination = $paginator->paginate(
+                $questions,
+                $request->query->getInt('page', 1),
+                10
+            );
+
+            if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {
+                // If the request comes from Turbo, set the content type as text/vnd.turbo-stream.html and only send the HTML to update
+                $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+                return $this->renderBlock('question/index.html.twig', 'filtred_questions', ['questions' => $pagination, 'questionsForm' => $newForm]);
+            }
+
+            return $this->redirectToRoute('app_questions');
         }
 
-        // Récupérez les filtres à partir des paramètres de la requête
-        $title = $request->query->get('title');
-        $authorId = $request->query->get('author');
-        $categoryId = $request->query->get('category');
-
-        // Trouvez l'auteur et la catégorie si les IDs sont fournis
-        $author = $authorId ? $userRepository->find($authorId) : null;
-        $category = $categoryId ? $categoryRepository->find($categoryId) : null;
-
-        // Appliquez les filtres si nécessaire
-        $questions = $questionRepository->findQuestionsByFilters($title, $author, $category);
-
-        // Comptez les résultats après filtrage
         $results = count($questions);
 
-        // Appliquez la pagination
         $pagination = $paginator->paginate(
             $questions,
             $request->query->getInt('page', 1),
             10
         );
 
-        // Rendez la vue avec les questions filtrées et paginées
-        return $this->render('questions/index.html.twig', [
-            'questionsForm' => $form->createView(),
+        return $this->render('question/index.html.twig', [
+            'questionsForm' => $form,
             'questions' => $pagination,
             'results' => $results,
+            'categories' =>$categories,
         ]);
     }
 
+    #[Route('/question/new', name: 'app_new_question')]
+    public function new(Request $request, EntityManagerInterface $manager, Security $security): Response
+    {
+        $question = new Question();
+        $form = $this->createForm(QuestionType::class)->handleRequest($request);
+        try {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $file = (new File())
+                    ->setImageFile($form->get('imageFile')->getData());
+                $manager->persist($file);
 
+                $question
+                    ->setCreatedAt(new \DateTimeImmutable())
+                    ->setTitle($form->getData()->getTitle())
+                    ->setCategory($form->getData()->getCategory())
+                    ->setAuthor($security->getUser())
+                    ->setFile($file);
 
+                $manager->persist($question);
+                $this->addFlash('success', "L'exercice a bien été ajouté !");
+                $manager->flush();
+
+                return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
+            }
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            $this->addFlash('error', "Erreur pendant l'ajout de l'exercice.");
+        }
+
+        return $this->render('question/new.html.twig', [
+            'form' => $form
+        ]);
+    }
 }

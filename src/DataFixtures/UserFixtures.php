@@ -13,75 +13,38 @@ class UserFixtures extends Fixture
 
     public const USERS = [
         [
-            'firstname' => 'Jeff',
-            'lastname' => 'Martins',
+            'username' => 'Jeff Martins',
             'email' => 'example@example.com',
             'role' => 'ROLE_AUTHOR',
         ],
         [
-            'firstname' => 'Jean',
-            'lastname' => 'Claude',
+            'username' => 'Jean Claude',
             'email' => 'example2@example.com',
             'role' => 'ROLE_AUTHOR',
         ],
         [
-            'firstname' => 'Marie',
-            'lastname' => 'Dubois',
+            'username' => 'Marie Dubois',
             'email' => 'marie.dubois@example.com',
             'role' => 'ROLE_AUTHOR',
         ],
         [
-            'firstname' => 'Paul',
-            'lastname' => 'Martin',
+            'username' => 'Paul Martin',
             'email' => 'paul.martin@example.com',
             'role' => 'ROLE_AUTHOR',
         ],
         [
-            'firstname' => 'Sophie',
-            'lastname' => 'Leroux',
+            'username' => 'Sophie Leroux',
             'email' => 'sophie.leroux@example.com',
             'role' => 'ROLE_AUTHOR',
         ],
         [
-            'firstname' => 'Lucas',
-            'lastname' => 'Moreau',
+            'username' => 'Lucas Moreau',
             'email' => 'lucas.moreau@example.com',
             'role' => 'ROLE_AUTHOR',
         ],
         [
-            'firstname' => 'Emma',
-            'lastname' => 'Carpentier',
+            'username' => 'Emma Carpentier',
             'email' => 'emma.carpentier@example.com',
-            'role' => 'ROLE_AUTHOR',
-        ],
-        [
-            'firstname' => 'Hugo',
-            'lastname' => 'Roux',
-            'email' => 'hugo.roux@example.com',
-            'role' => 'ROLE_AUTHOR',
-        ],
-        [
-            'firstname' => 'Clara',
-            'lastname' => 'Petit',
-            'email' => 'clara.petit@example.com',
-            'role' => 'ROLE_AUTHOR',
-        ],
-        [
-            'firstname' => 'Léa',
-            'lastname' => 'Garcia',
-            'email' => 'lea.garcia@example.com',
-            'role' => 'ROLE_AUTHOR',
-        ],
-        [
-            'firstname' => 'Maxime',
-            'lastname' => 'Dupont',
-            'email' => 'maxime.dupont@example.com',
-            'role' => 'ROLE_AUTHOR',
-        ],
-        [
-            'firstname' => 'Chloé',
-            'lastname' => 'Bernard',
-            'email' => 'chloe.bernard@example.com',
             'role' => 'ROLE_AUTHOR',
         ],
     ];
@@ -95,8 +58,7 @@ class UserFixtures extends Fixture
     {
         foreach (self::USERS as $i => $appUser) {
             $user = new User();
-            $user->setFirstname($appUser['firstname'])
-                ->setLastname($appUser['lastname'])
+            $user->setUsername($appUser['username'])
                 ->setEmail($appUser['email'])
                 ->setRoles([$appUser['role']])
                 ->setPassword($this->passwordHasher->hashPassword($user, 'xxx'));

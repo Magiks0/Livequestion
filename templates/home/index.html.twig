@@ -4,7 +4,7 @@
     <section class="w-full p-2 h-screen flex-col pb-10">
         <div class="h-1/2 p-10 flex items-center justify-center">
             <a href="#" class="w-full h-full rounded-3xl flex hover:bg-gray-100 hover:duration-100">
-                <img src="{{ asset('images/affiche_dxw.jpg') }}" alt="image_question" class="w-1/3 py-2 pl-2 h-full object-cover rounded-3xl ">
+                <img src="{{ asset('images/' ~ mostResponsesQuestion.file.originalName) }}" alt="image_question" class="w-1/3 py-2 pl-2 h-full object-cover rounded-3xl ">
                 <div class="w-2/3 h-full pt-8 ml-10">
                     <div class="flex w-1/4 justify-between">
                         <p class="font-bold">{{ mostResponsesQuestion.category.name }}</p>
@@ -17,7 +17,7 @@
                     <div class="h-1/4 flex">
                         <p class="text-[#AD0569]">{{ mostResponsesQuestion.responses.count() }} réponses</p>
                         <span class="px-2 text-[#AD0569]">-</span>
-                        <p class="text-[#AD0569]">par {{ mostResponsesQuestion.author.firstname }} {{ mostResponsesQuestion.author.lastname }} </p>
+                        <p class="text-[#AD0569]">par {{ mostResponsesQuestion.author.username }} </p>
                     </div>
                 </div>
             </a>
@@ -26,13 +26,13 @@
             <div class="w-full h-full">
                 <div class="w-full h-1/6 flex justify-between items-center">
                     <h2 class="text-3xl font-semibold">Dernières questions</h2>
-                    <a href="#" class="text-[#AD0569] underline text-lg">Voir toutes les questions</a>
+                    <a href="{{ path('app_question') }}" class="text-[#AD0569] underline text-lg">Voir toutes les questions</a>
                 </div>
                 <div class="flex justify-between">
-                    {% for question in allQuestions %}
+                    {% for question in lastQuestions %}
                         <twig:Card
                             title='{{ question.title }}'
-                            file="{{ question.file }}"
+                            file="{{ question.file.originalName }}"
                             responses="{{ question.responses.count() }}"
                             author="{{ question.author }}"
                             category="{{ question.category.name }}"
@@ -58,8 +58,7 @@
                             </div>
                             <div class="w-auto">
                                 <div class="text-2xl px-5 font-bold flex justify-center items-center">
-                                    {{ author.firstname }}
-                                    {{ author.lastname }}
+                                    {{ author.username }}
                                 </div>
                                 <div class="px-5 font-semibold">
                                     <span class="text-[#D4DB00] pr-2">{{ author.questions.count() }} </span> questions
@@ -77,10 +76,10 @@
                     <a href="#" class="text-[#AD0569] underline text-lg">Voir d'autres questions sur "Sports"</a>
                 </div>
                 <div class="flex justify-between">
-                    {% for question in allQuestions %}
+                    {% for question in sportsQuestions %}
                         <twig:Card
                             title='{{ question.title }}'
-                            file="{{ question.file }}"
+                            file="{{ question.file.originalName }}"
                             responses="{{ question.responses.count() }}"
                             author="{{ question.author }}"
                             category="{{ question.category.name }}"
@@ -98,27 +97,27 @@
                     <h2 class="text-3xl font-semibold">Questions aléatoires</h2>
                 </div>
                 <div class="h-2/3 flex flex-wrap">
-                    {% for question in allQuestions %}
+                    {% for question in randomQuestions %}
                         {% if loop.first %}
                             <a href="#" class="w-1/3 rounded-3xl hover:bg-gray-100">
-                                <img src="{{ asset('images/valorant.jpg') }}" alt="img_question" class="p-2 rounded-3xl">
+                                <img src="{{ asset('images/' ~ question.file.originalName )}}" alt="img_question" class="p-2 rounded-3xl">
                                 <h2 class="font-medium text-2xl p-2">{{ question.title }}</h2>
                                 <div class="p-2 flex text-[#AD0569]">
                                     <p>{{ question.responses.count() }} réponses</p>
                                     <span class="px-2">-</span>
-                                    <p>par {{ question.author.firstname }} {{ question.author.lastname() }}</p>
+                                    <p>par {{ question.author.username }}</p>
                                     <span class="px-2">-</span>
                                     <p>Il y a {{ question.createdAt|date }}</p>
                                 </div>
                             </a>
                         {% else %}
                             <a href="#" class="w-1/6 h-4/6 rounded-3xl mx-10 hover:bg-gray-100">
-                                <img src="{{ asset('images/valorant.jpg') }}" alt="img_question" class="p-2 rounded-3xl">
+                                <img src="{{ asset('images/' ~ question.file.originalName )}}" alt="img_question" class="h-1/2 object-fill p-2 rounded-3xl">
                                 <h2 class="font-medium text-lg p-2">{{ question.title }}</h2>
                                 <div class="p-2 flex text-[#AD0569] text-[10px]">
                                     <p>{{ question.responses.count() }} réponses</p>
                                     <span class="px-2">-</span>
-                                    <p>par {{ question.author.firstname }} {{ question.author.lastname() }}</p>
+                                    <p>par {{ question.author.username }}</p>
                                     <span class="px-2">-</span>
                                     <p>{{ question.createdAt|date }}</p>
                                 </div>
@@ -129,28 +128,4 @@
             </div>
         </div>
     </section>
-    <footer class="border-b-black flex-col mx-28 py-10">
-        <div class="flex-col justify-center border-b-2 border-b-black">
-            <h2 class="text-4xl text-[#AD0569] flex justify-center py-1 font-semibold">
-                Livequestion
-            </h2>
-            <h3 class="text-2xl flex justify-center pt-2 pb-10 font-semibold">
-                Echangez autour de vos thématiques préférées
-            </h3>
-        </div>
-        <div class="w-full flex justify-between py-14">
-            {% for category in categories %}
-                <a href="#" class="font-semibold">
-                    {{ category.name }}
-                </a>
-            {% endfor %}
-        </div>
-        <div class="flex mt-28">
-            <p>© 2024 </p>
-            <span class="px-2">-</span>
-            <p>Projet étudiant BTS / Licence</p>
-            <span class="px-2">-</span>
-            <a href="#">Contactez-nous</a>
-        </div>
-    </footer>
 {% endblock %}

@@ -5,16 +5,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="509152d4-58bb-464d-a50d-6ae29e81123e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Form/FileType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/LoginType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/QuestionType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Twig/Extension/CategoryExtension.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/login/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/login/_register_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/login/register.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/question/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/question/_research_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/question/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/question/new.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/affiche_dxw.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/media_0.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/valorant.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/media_1.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/QuestionsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/QuestionsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/QuestionFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/QuestionFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/ResponseFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/ResponseFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Question.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Question.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Response.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Response.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/QuestionsType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ResearchType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/AuthorRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/QuestionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/QuestionRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ResponseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ResponseRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Twig/Card.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Twig/Components/Card.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/components/Card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/components/Card.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/questions/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/questions/index.html.twig" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,6 +194,14 @@
       <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/http-client" />
       <path value="$PROJECT_DIR$/vendor/symfony/asset-mapper" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/vendor/twig/intl-extra" />
+      <path value="$PROJECT_DIR$/vendor/symfony/ux-twig-component" />
+      <path value="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/vendor/knplabs/knp-components" />
+      <path value="$PROJECT_DIR$/vendor/jms/metadata" />
+      <path value="$PROJECT_DIR$/vendor/vich/uploader-bundle" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{

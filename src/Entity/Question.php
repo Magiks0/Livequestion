@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
+use App\Entity\File;
 use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
+#[Vich\Uploadable]
 class Question
 {
     #[ORM\Id]
@@ -18,24 +21,24 @@ class Question
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\ManyToOne(inversedBy: 'questions')]
+    #[ORM\ManyToOne(inversedBy: 'question')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
-    #[ORM\ManyToOne(inversedBy: 'questions')]
+    #[ORM\ManyToOne(inversedBy: 'question')]
     private ?Category $category = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $file = null;
 
     /**
      * @var Collection<int, Response>
      */
     #[ORM\OneToMany(targetEntity: Response::class, mappedBy: 'question')]
     private Collection $responses;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?File $file = null;
 
     public function __construct()
     {
@@ -94,19 +97,7 @@ class Question
 
         return $this;
     }
-
-    public function getFile(): ?string
-    {
-        return $this->file;
-    }
-
-    public function setFile(string $file): static
-    {
-        $this->file = $file;
-
-        return $this;
-    }
-
+    
     /**
      * @return Collection<int, Response>
      */
@@ -133,6 +124,18 @@ class Question
                 $response->setQuestion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFile(?File $file): static
+    {
+        $this->file = $file;
 
         return $this;
     }

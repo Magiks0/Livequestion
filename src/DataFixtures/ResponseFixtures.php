@@ -28,6 +28,11 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
             'question' => '2',
             'author' => '1',
         ],
+        [
+            'content' => "Perso je na l'ai pas vu :(.",
+            'question' => '1',
+            'author' => '1',
+        ],
     ];
 
     public function load(ObjectManager $manager)
@@ -36,7 +41,8 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
             $resp = (new Response())
                 ->setContent($response['content'])
                 ->setQuestion($this->getReference(QuestionFixtures::REFERENCE_IDENTIFIER.$response['question']))
-                ->setAuthor($this->getReference(UserFixtures::REFERENCE_IDENTIFIER.$response['author']));
+                ->setAuthor($this->getReference(UserFixtures::REFERENCE_IDENTIFIER.$response['author']))
+                ->setCreatedAt(new \DateTimeImmutable());
 
             $manager->persist($resp);
             $this->addReference(self::REFERENCE_IDENTIFIER.$i, $resp);

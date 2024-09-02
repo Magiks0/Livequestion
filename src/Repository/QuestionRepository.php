@@ -4,8 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use App\Entity\Question;
+use App\Entity\Response;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,7 +20,24 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    public function findQuestionsByFilters(?string $title, ?User $author, ?Category $category)
+    public function findMostRespondedQuestion(): ?Question
+    {
+        $date = new \DateTime('-3 days');
+
+        // Requête pour trouver la question avec le plus grand nombre de réponses dans les 3 derniers jours
+        return $this->createQueryBuilder('q')
+            ->leftJoin(Response::class, 'r', 'WITH', 'r.question = q.id')
+            ->where('r.createdAt >= :date')
+            ->setParameter('date', $date)
+            ->groupBy('q.id')
+            ->orderBy('COUNT(r.id)', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult(); // Obtient l'entité Question ou null si non trouvé
+    }
+
+
+    public function findQuestionsByFilters(?string $title, ?User $author, ?Category $category): array
     {
         $qb = $this->createQueryBuilder('qu');
 
@@ -38,5 +57,14 @@ class QuestionRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function findRandomQuestions(): array
+    {
+        $qb = $this->createQueryBuilder('q')
+             ->getEntityManager()->createQuery('SELECT q FROM App\Entity\Question q ORDER BY RAND()')
+            ->setMaxResults(3);
+
+        return $qb->getResult();
     }
 }

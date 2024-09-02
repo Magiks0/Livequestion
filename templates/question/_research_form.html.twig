@@ -1,0 +1,28 @@
+{% block question_form %}
+    {{ form_start(questionsForm, { 'attr':
+        {'class':'w-1/2 p-5 border-2 rounded-2xl'},
+    }) }}
+    <div class="flex flex-col my-4">
+        {{ form_label(questionsForm.title) }}
+        {{ form_widget(questionsForm.title, { 'attr':
+            {'class':'border-2 border-gray-200 rounded-lg'},
+        }) }}
+    </div>
+    <div class="flex w-full justify-between">
+        <div class="flex flex-col w-1/2 pr-4">
+            {{ form_label(questionsForm.author) }}
+            {{ form_widget(questionsForm.author, { 'attr':
+                {'class':'border-2 border-gray-200 pr-2 rounded-lg'},
+            }) }}
+        </div>
+        <div class="flex flex-col w-1/2 pl-4">
+            {{ form_label(questionsForm.category) }}
+            {{ form_widget(questionsForm.category, { 'attr':
+                {'class':'border-2 border-gray-200 rounded-lg'},
+            }) }}
+        </div>
+
+    </div>
+    <button type="submit">Envoyer</button>
+    {{ form_end(questionsForm) }}
+{% endblock %}

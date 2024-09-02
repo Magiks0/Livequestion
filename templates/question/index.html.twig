@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="h-full p-20">
+        <h1 class="text-4xl pb-10">Les questions</h1>
+        <h2 class="text-xl">Filtrer les résultats</h2>
+        {% include 'question/_research_form.html.twig' with {questionsForm} only %}
+        <div id="questions" class="flex flex-col justify-between mt-10">
+            {% if questions is not empty %}
+                {% for question in questions %}
+                    <a href="#" class="h-64 w-full my-8 p-2 rounded-3xl flex hover:bg-gray-100">
+                        <img src="{{ asset('images/' ~ question.file.originalName) }}" alt="image_question" class="w-1/4 h-64 object-cover object-center rounded-3xl">
+                        <div class="flex flex-col justify-between p-10">
+                            <div>
+                                <div class="flex text-lg">
+                                    <p class="font-semibold">{{ question.category.name }}</p>
+                                    <span class="px-4">•</span>
+                                    <p>{{ question.createdAt|date }}</p>
+                                </div>
+                            </div>
+                            <p class="text-2xl font-medium">{{ question.title }}</p>
+                            <div class="flex text-lg text-[#AD0569]">
+                                <p>{{ question.responses.count() }} réponses</p>
+                                <span class="px-4">•</span>
+                                <p>Par {{ question.author.username }}</p>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+                {% else %}
+                <h3>Aucun résultats correspondants</h3>
+            {% endif %}
+        </div>
+        <div id="pagination" class="flex justify-center text-[#AD0569] text-lg ">
+            {{ knp_pagination_render(questions) }}
+        </div>
+    </section>
+{% endblock %}
+
+{% block filtred_questions %}
+    <turbo-stream action="replace" targets="form[name=questionsForm]">
+        <template>
+            {% include 'question/_research_form.html.twig' with {questionsForm} only %}
+        </template>
+    </turbo-stream>
+
+    <turbo-stream action="replace" targets="#pagination">
+        <template>
+            <div id="pagination" class="flex justify-center text-[#AD0569] text-lg ">
+                {{ knp_pagination_render(questions) }}
+            </div>
+        </template>
+    </turbo-stream>
+
+    <turbo-stream action="update" targets="#questions">
+        <template>
+            <div id="questions" class="flex flex-col justify-between">
+                {% if questions is not empty %}
+                    {% for question in questions %}
+                        <a href="#" class="h-64 w-full my-8 p-2 rounded-3xl flex hover:bg-gray-100">
+                            <img src="{{ asset('images/' ~ question.file.originalName) }}" alt="image_question" class="w-1/4 h-64 object-cover object-center rounded-3xl">
+                            <div class="flex flex-col justify-between p-10">
+                                <div>
+                                    <div class="flex text-lg">
+                                        <p class="font-semibold">{{ question.category.name }}</p>
+                                        <span class="px-4">•</span>
+                                        <p>{{ question.createdAt|date }}</p>
+                                    </div>
+                                </div>
+                                <p class="text-2xl font-medium">{{ question.title }}</p>
+                                <div class="flex text-lg text-[#AD0569]">
+                                    <p>{{ question.responses.count() }} réponses</p>
+                                    <span class="px-4">•</span>
+                                    <p>Par {{ question.author.username }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <h3>Aucun résultats correspondants</h3>
+                {% endif %}
+            </div>
+        </template>
+    </turbo-stream>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="h-screen mt-[-120px] flex justify-center items-center">
+        {% include 'question/_form.html.twig' with {form} only %}
+    </section>
+{% endblock %}

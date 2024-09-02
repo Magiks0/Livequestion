@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -34,10 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $firstname = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $lastname = null;
+    private ?string $username = null;
 
     /**
      * @var Collection<int, Question>
@@ -132,26 +129,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFirstname(): ?string
+    public function getUsername(): ?string
     {
-        return $this->firstname;
+        return $this->username;
     }
 
-    public function setFirstname(string $firstname): static
+    public function setUsername(string $username): static
     {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(?string $lastname): static
-    {
-        $this->lastname = $lastname;
+        $this->username = $username;
 
         return $this;
     }

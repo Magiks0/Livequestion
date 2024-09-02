@@ -10,4 +10,26 @@
 }
 body {
     background-color: white;
+    scroll-behavior: smooth;
+}
+
+.pagination {
+
+}
+
+.current {
+    font-size: large;
+    font-weight: bolder;
+}
+
+.active{
+    display: flex;
+    flex-direction: column;
+}
+
+.active::after{
+    content: '';
+    height: 2px;
+    width: 100%;
+    background: #fff;
 }
