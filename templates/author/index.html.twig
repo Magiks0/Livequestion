@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="h-screen flex flex-col items-center">
+    {% for author in authors %}
+        <div class="w-1/3 py-2 flex items-center">
+            <img class="w-1/6 p-5" src="{{ asset('images/utilisateur.png') }}" alt="user_account">
+            <div class="flex-col">
+                <div class="flex justify-center text-xl">
+                    <h2>{{ author.username }}</h2>
+                </div>
+                <div class="flex justify-center text-[#AD0569] text-xl">
+                    <p>{{ author.responses.count() }} questions</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -30,12 +30,15 @@ class RegisterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             $user = new User();
-            $user->setUsername($formData['username'])
-                ->setEmail($formData['email'])
-                ->setPassword($passwordEncoder->hashPassword($user, $formData['password']));
+            $user->setUsername($formData->getUsername())
+                ->setEmail($formData->getEmail())
+                ->setRoles(['ROLE_AUTHOR'])
+                ->setPassword($passwordEncoder->hashPassword($user, $formData->getPassword()));
 
             $this->manager->persist($user);
             $this->manager->flush();
+
+            return $this->redirectToRoute('app_login');
         }
 
 

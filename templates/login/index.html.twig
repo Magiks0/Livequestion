@@ -7,5 +7,7 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
+    <h1 class="text-4xl">Se connecter</h1>
+
     {% include 'login/_form.html.twig' with {form} only %}
 {% endblock %}
